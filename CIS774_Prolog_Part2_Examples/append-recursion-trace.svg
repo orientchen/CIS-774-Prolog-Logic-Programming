@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-labelledby="title desc">
+<title id="title">Prolog append recursion and base case</title>
+<desc id="desc">Three recursive calls, the base case matching append([],Y,Y), and upward propagation of W2, W1 and Z.</desc>
+<style>text{font-family:Arial,sans-serif;fill:#1e293b}.heading{font-size:24px;font-weight:700}.code{font:20px monospace}.note{font-size:19px}.small{font:18px monospace}.call{fill:#edf5ff;stroke:#6b9acb;stroke-width:2}.base{fill:#e9f7eb;stroke:#5b9c66;stroke-width:2}.ret{fill:#fff3dd;stroke:#bd9451;stroke-width:2}.arrow{stroke:#5d7187;stroke-width:3;fill:none;marker-end:url(#arrow)}.up{stroke:#aa7734;stroke-width:3;fill:none;marker-end:url(#upArrow)}</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#5d7187"/></marker><marker id="upArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#aa7734"/></marker></defs>
+<text x="40" y="42" class="heading">append([1,2], [3,4], Z): recursion trace</text>
+<rect x="35" y="65" width="830" height="116" rx="12" class="call"/>
+<text x="55" y="98" class="heading">Call 1: recursive case</text>
+<text x="55" y="130" class="code">append([1,2], [3,4], Z)</text>
+<text x="55" y="160" class="small">A=1, B=[2], Z=[1|W1]</text>
+<path d="M120 181 V223" class="arrow"/>
+<rect x="75" y="228" width="790" height="116" rx="12" class="call"/>
+<text x="95" y="261" class="heading">Call 2: recursive case</text>
+<text x="95" y="293" class="code">append([2], [3,4], W1)</text>
+<text x="95" y="323" class="small">A=2, B=[], W1=[2|W2]</text>
+<path d="M160 344 V385" class="arrow"/>
+<rect x="115" y="390" width="750" height="195" rx="12" class="base"/>
+<text x="135" y="423" class="heading">Call 3: base case</text>
+<text x="135" y="455" class="code">append([], [3,4], W2)</text>
+<text x="135" y="490" class="note">Unify with the rule:</text>
+<text x="350" y="490" class="code">append([], Y, Y).</text>
+<text x="135" y="525" class="small">2nd argument: Y = [3,4]</text>
+<text x="135" y="557" class="small">3rd argument: W2 = Y = [3,4]</text>
+<path d="M495 585 V631" class="up"/>
+<text x="512" y="613" class="note">Return; propagate bindings</text>
+<rect x="115" y="636" width="750" height="94" rx="12" class="ret"/>
+<text x="135" y="669" class="heading">Return to Call 2</text>
+<text x="135" y="705" class="code">W1 = [2|W2] = [2,3,4]</text>
+<path d="M495 730 V769" class="up"/>
+<rect x="115" y="774" width="750" height="94" rx="12" class="ret"/>
+<text x="135" y="807" class="heading">Return to Call 1</text>
+<text x="135" y="843" class="code">Z = [1|W1] = [1,2,3,4]</text>
+</svg>
