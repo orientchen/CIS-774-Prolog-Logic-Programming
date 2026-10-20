@@ -20,12 +20,28 @@ The second query produces `Z = [1,2,3,4]`. The third enumerates splits: `([], [1
 
 ## Step-by-step recursion
 
-1. `append_demo([1,2],[3,4],Z)` matches `[A|B]=[1,2]`, so `A=1`, `B=[2]`, `Z=[1|W1]`.
-2. `append_demo([2],[3,4],W1)` sets `A=2`, `B=[]`, `W1=[2|W2]`.
-3. Base case `append_demo([],[3,4],W2)` gives `W2=[3,4]`.
-4. Substitute upward: `W1=[2,3,4]`, then `Z=[1,2,3,4]`.
+The following figure traces `append_demo([1,2], [3,4], Z)` from the initial call through the base case and back to the final binding.
 
-![Prolog append recursion trace, including the base case and returning bindings](append-recursion-trace.svg)
+![Recursion trace for append_demo([1,2], [3,4], Z), descending to the empty-list base case and returning with Z = [1,2,3,4].](append-recursion-trace.svg)
+
+*Figure 1. Recursive list concatenation: descending calls reach the base case, then variable bindings propagate upward to construct the result.*
+
+### Accessible text description of Figure 1
+
+**Descending recursive calls:**
+
+1. **Call 1:** `append_demo([1,2], [3,4], Z)` matches the recursive rule. Unifying `[A|B]` with `[1,2]` gives `A = 1` and `B = [2]`. The result has the form `Z = [1|W1]`, and the next call is `append_demo([2], [3,4], W1)`.
+2. **Call 2:** `append_demo([2], [3,4], W1)` gives `A = 2`, `B = []`, and `W1 = [2|W2]`. The next call is `append_demo([], [3,4], W2)`.
+3. **Call 3 (base case):** `append_demo([], [3,4], W2)` matches `append_demo([], Y, Y)`, binding `W2 = [3,4]`. No further recursive call is needed.
+
+**Returning from recursion:**
+
+1. **Return to Call 2:** Substitute `W2 = [3,4]` into `W1 = [2|W2]`, giving `W1 = [2,3,4]`.
+2. **Return to Call 1:** Substitute `W1 = [2,3,4]` into `Z = [1|W1]`, giving `Z = [1,2,3,4]`.
+
+The return steps show **propagation of variable bindings after successful recursive calls**, not backtracking to try an alternative clause.
+
+**Accessibility note:** The description above provides the sequence of recursive calls, the base case, and the returning bindings in text, so the explanation does not depend on viewing the figure.
 
 ### Why does the base case give `W2 = [3,4]`?
 
