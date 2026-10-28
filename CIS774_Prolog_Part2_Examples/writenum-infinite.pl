@@ -6,6 +6,5 @@ num(X) :-
 writenum(I, J) :-
     num(X),
     I =< X,
-    X =< J,
     write(X), nl,
     fail.
